@@ -1,0 +1,14 @@
+CONTENTS:
+
+* train_mini.txt    (fake training data to test your classifier)
+* test_mini.txt     (fake test data to test your classifier)
+* train_genspam.txt (real training data)
+* test_genspam.txt  (real test data)
+
+
+The GenSpam email spam corpus is being used for the summer 2006 section of CS121 with the explicit permission of its creator, Ben Medlock. The corpus has been modified to allow spam and genuine messages to be placed in the same file. Rather than using plain <MESSAGE> xml tags, we use <MESSAGE GENUINE> and <MESSAGE SPAM> tags to distinguish between genuine and spammy messages. Otherwise, the CS121 corpus resembles the original, which is publicly available at Medlock's website: http://www.cl.cam.ac.uk/~bwm23/.
+
+Note that the GenSpam corpus is pre-tokenized with white space delimiting useful tokens. Most original punctuation and captilization is present.
+
+
+Dave Kale, CS121 TA, Summer Section 2006

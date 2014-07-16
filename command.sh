@@ -1,0 +1,3 @@
+#java -Xmx1024M classify.spam.Tester -classifier classify.student.NaiveBayesClassifier -fextractor classify.spam.UnigramFeatureExtractor -train data/train_mini.txt -test data/test_mini.txt -threshold 0.5
+#java -Xmx1024M classify.spam.Tester -classifier classify.student.NaiveBayesClassifier -fextractor classify.spam.UnigramFeatureExtractor -train data/test_genspam.txt -test data/test_genspam.txt -threshold 0.5
+java -Xmx1024M classify.spam.Tester -classifier classify.student.NaiveBayesClassifier -fextractor classify.spam.UnigramFeatureExtractor -train data/train_genspam.txt -test data/test_genspam.txt -threshold 0.5
