@@ -61,7 +61,7 @@ public class NaiveBayesClassifier implements Classifier {
 			p = (eta * this.delta)
 					/ (labelCounts.getCount(label) + this.V * this.delta);
 		}
-		logP += Math.log(p);
+		logP += features.getCount(f) * Math.log(p);
 	}
 	 
  //   System.err.println("CS 121 STUDENT: implement me as part of TASK 1!");
@@ -72,20 +72,21 @@ public class NaiveBayesClassifier implements Classifier {
     labelAndFeatureCounts = new CounterMap<Object, Object>();
     labelCounts = new Counter<Object>();
     vocabulary = new Counter<Object>();
+    labelProbs = new Counter<Object>();
     for(Example e : examples) {
-    	labelCounts.incrementCount(e.getLabel(),1.0);
+    	labelProbs.incrementCount(e.getLabel(),1.0);
     	Counter<Object> features = e.getFeatures();
     	for(Object f : features.keySet()) {
     		vocabulary.incrementCount(f, 1);
+		labelCounts.incrementCount(e.getLabel(),features.getCount(f));
     		labelAndFeatureCounts.incrementCount(e.getLabel(), f, features.getCount(f));
     	}
     }
-    labelProbs = new Counter<Object>();
     // lets compute log probabilities for all labels
  	double totalExamples = examples.size();
  	for(Object key : labelCounts.keySet()){
-    	//System.out.println(key + " " + labelCounts.getCount(key)) ;
- 		labelProbs.setCount(key, Math.log(labelCounts.getCount(key)/totalExamples));
+    		System.out.println("DEBUG: " + key + " " + labelCounts.getCount(key)) ;
+ 		labelProbs.setCount(key, Math.log(labelProbs.getCount(key)/totalExamples));
  	}
 
  	this.V = this.eta + this.vocabulary.size();
