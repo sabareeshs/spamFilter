@@ -84,8 +84,8 @@ public class NaiveBayesClassifier implements Classifier {
     }
     // lets compute log probabilities for all labels
  	double totalExamples = examples.size();
- 	for(Object key : labelCounts.keySet()){
-    		System.out.println("DEBUG: " + key + " " + labelCounts.getCount(key)) ;
+ 	for(Object key : labelProbs.keySet()){
+		System.out.println("DEBUG: " + key + " " + labelProbs.getCount(key)) ;
  		labelProbs.setCount(key, Math.log(labelProbs.getCount(key)/totalExamples));
  	}
 
