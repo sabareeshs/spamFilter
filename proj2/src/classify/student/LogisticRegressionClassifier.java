@@ -13,10 +13,12 @@ import java.util.List;
 import util.Counter;
 import classify.general.BinaryClassifier;
 import classify.general.Example;
+import classify.spam.EmailMessage;
 
 public class LogisticRegressionClassifier extends BinaryClassifier {
 
   private Counter<Object> weightVector;
+  private double bias = 0;
   
   public Object getLabel(Example example) {
     Counter scores = getLabelScores(example);
@@ -37,14 +39,36 @@ public class LogisticRegressionClassifier extends BinaryClassifier {
   }
   
   public double getScore(Example example) {
-    System.err.println("CS 121 STUDENT: implement me for EXTRA CREDIT!");
-    double score = 0.0;
+    //System.err.println("CS 121 STUDENT: implement me for EXTRA CREDIT!");
+    double score = this.bias;
+    Counter<Object> features = example.getFeatures();
+    for (Object f : features.keySet()) {
+        score += weightVector.getCount(f) * features.getCount(f);
+    }
+    //System.err.println("CS 121 STUDENT: implement me as part of TASK 3!");
     return sigmoidFunction(score);
   }
 
+  private void updateWeights(Example example, double error, double alpha) {
+      Counter<Object> features = example.getFeatures();
+      for (Object f : features.keySet()) {
+          weightVector.incrementCount(f, alpha * error * features.getCount(f));
+      }
+      this.bias += alpha * error;
+  }
   public void train(List<Example> examples) {
-    System.err.println("CS 121 STUDENT: implement me for EXTRA CREDIT!");
+    //System.err.println("CS 121 STUDENT: implement me for EXTRA CREDIT!");
     weightVector = new Counter<Object>();
+    int numEpochs = 100;
+    double alpha = 10;
+    while (numEpochs-- > 0) {
+        for (Example e : examples) {
+            double score = getScore(e);
+            double y = (e.getLabel() == EmailMessage.labelSpam ? 0.0 : 1.0);
+            updateWeights(e,y-score, alpha);
+        }
+        alpha -= alpha/10;
+    }
   }
   
   static public double sigmoidFunction(double z) {
